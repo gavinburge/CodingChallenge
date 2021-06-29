@@ -7,6 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paymentsense.Coding.Challen
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paymentsense.Coding.Challenge.Api.Tests", "Paymentsense.Coding.Challenge.Api.Tests\Paymentsense.Coding.Challenge.Api.Tests.csproj", "{29B33764-7D72-4940-90F9-28467B569288}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paymentsense.Coding.Challenge.Contracts", "Paymentsense.Coding.Challenge.Contracts\Paymentsense.Coding.Challenge.Contracts.csproj", "{012C7A2B-014E-436E-98E7-D070AD2FA6DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paymentsense.Coding.Challenge.Core", "Paymentsense.Coding.Challenge.Core\Paymentsense.Coding.Challenge.Core.csproj", "{79D4CE16-15D1-40B7-AA88-628B55542BC4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{105AFBA5-DD09-485D-AD36-53B6F14265F9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,9 +47,36 @@ Global
 		{29B33764-7D72-4940-90F9-28467B569288}.Release|x64.Build.0 = Release|Any CPU
 		{29B33764-7D72-4940-90F9-28467B569288}.Release|x86.ActiveCfg = Release|Any CPU
 		{29B33764-7D72-4940-90F9-28467B569288}.Release|x86.Build.0 = Release|Any CPU
+		{012C7A2B-014E-436E-98E7-D070AD2FA6DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{012C7A2B-014E-436E-98E7-D070AD2FA6DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{012C7A2B-014E-436E-98E7-D070AD2FA6DB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{012C7A2B-014E-436E-98E7-D070AD2FA6DB}.Debug|x64.Build.0 = Debug|Any CPU
+		{012C7A2B-014E-436E-98E7-D070AD2FA6DB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{012C7A2B-014E-436E-98E7-D070AD2FA6DB}.Debug|x86.Build.0 = Debug|Any CPU
+		{012C7A2B-014E-436E-98E7-D070AD2FA6DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{012C7A2B-014E-436E-98E7-D070AD2FA6DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{012C7A2B-014E-436E-98E7-D070AD2FA6DB}.Release|x64.ActiveCfg = Release|Any CPU
+		{012C7A2B-014E-436E-98E7-D070AD2FA6DB}.Release|x64.Build.0 = Release|Any CPU
+		{012C7A2B-014E-436E-98E7-D070AD2FA6DB}.Release|x86.ActiveCfg = Release|Any CPU
+		{012C7A2B-014E-436E-98E7-D070AD2FA6DB}.Release|x86.Build.0 = Release|Any CPU
+		{79D4CE16-15D1-40B7-AA88-628B55542BC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79D4CE16-15D1-40B7-AA88-628B55542BC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79D4CE16-15D1-40B7-AA88-628B55542BC4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{79D4CE16-15D1-40B7-AA88-628B55542BC4}.Debug|x64.Build.0 = Debug|Any CPU
+		{79D4CE16-15D1-40B7-AA88-628B55542BC4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{79D4CE16-15D1-40B7-AA88-628B55542BC4}.Debug|x86.Build.0 = Debug|Any CPU
+		{79D4CE16-15D1-40B7-AA88-628B55542BC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79D4CE16-15D1-40B7-AA88-628B55542BC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79D4CE16-15D1-40B7-AA88-628B55542BC4}.Release|x64.ActiveCfg = Release|Any CPU
+		{79D4CE16-15D1-40B7-AA88-628B55542BC4}.Release|x64.Build.0 = Release|Any CPU
+		{79D4CE16-15D1-40B7-AA88-628B55542BC4}.Release|x86.ActiveCfg = Release|Any CPU
+		{79D4CE16-15D1-40B7-AA88-628B55542BC4}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{29B33764-7D72-4940-90F9-28467B569288} = {105AFBA5-DD09-485D-AD36-53B6F14265F9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B43FA89C-9979-4D77-B29A-FAAFA80619F7}

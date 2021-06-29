@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Paymentsense.Coding.Challenge.Api.Extensions;
 
 namespace Paymentsense.Coding.Challenge.Api
 {
@@ -29,6 +30,9 @@ namespace Paymentsense.Coding.Challenge.Api
                         .AllowAnyHeader();
                 });
             });
+
+            services.AddHandlers();
+            services.AddSwaggerConfig();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +56,9 @@ namespace Paymentsense.Coding.Challenge.Api
                 endpoints.MapControllers();
                 endpoints.MapHealthChecks("/health");
             });
+
+            app.UseSwagger()
+               .UseSwaggerUI(c => c.SwaggerEndpoint("v1/swagger.json", "Paymentsense"));
         }
     }
 }
