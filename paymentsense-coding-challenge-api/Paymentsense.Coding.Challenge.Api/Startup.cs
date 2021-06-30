@@ -31,8 +31,13 @@ namespace Paymentsense.Coding.Challenge.Api
                 });
             });
 
-            services.AddHandlers();
-            services.AddSwaggerConfig();
+            services.AddHandlers()
+                    .AddServices(Configuration);
+
+            if(Configuration.GetValue<bool>("EnableSwagger"))
+            {
+                services.AddSwaggerConfig();
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

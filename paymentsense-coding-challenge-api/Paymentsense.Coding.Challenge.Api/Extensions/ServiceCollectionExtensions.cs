@@ -1,14 +1,13 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Paymentsense.Coding.Challenge.Contracts.Queries;
 using Paymentsense.Coding.Challenge.Contracts.Response;
 using Paymentsense.Coding.Challenge.Core.Handlers;
 using Paymentsense.Coding.Challenge.Core.Interfaces;
+using Paymentsense.Coding.Challenge.Core.Services;
 using System;
 using System.IO;
-using System.Linq;
-using System.Reflection;
 
 namespace Paymentsense.Coding.Challenge.Api.Extensions
 {
@@ -17,6 +16,16 @@ namespace Paymentsense.Coding.Challenge.Api.Extensions
         public static IServiceCollection AddHandlers(this IServiceCollection services)
         {
             services.AddTransient<IRequestHandler<GetCountriesQuery, GetCountriesResponse>, GetCountriesHandler>();
+
+            return services;
+        }
+
+        public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddHttpClient<ICountryHttpClientService, CountryHttpClientService>(c =>
+            {
+                c.BaseAddress = new Uri(configuration.GetValue<string>("RestCountriesUrl")); ;
+            });
 
             return services;
         }
@@ -44,7 +53,7 @@ namespace Paymentsense.Coding.Challenge.Api.Extensions
                         c.IncludeXmlComments(item.FullName);
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                 }
             });
