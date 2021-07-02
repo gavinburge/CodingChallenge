@@ -28,9 +28,12 @@ namespace Paymentsense.Coding.Challenge.Core.Handlers
                 () =>
                 {
                     return _countryHttpClientService.GetCountriesAsync();
-                });
+                }).ConfigureAwait(false);
 
-            return countries.ToGetCountriesResponse();
+            return new GetCountriesResponse
+            {
+                Countries = countries.ToContractCountries()
+            };
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Paymentsense.Coding.Challenge.Core.Services
                 {
                     entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1);
                     return func.Invoke();
-                });
+                }).ConfigureAwait(false);
         }
     }
 }

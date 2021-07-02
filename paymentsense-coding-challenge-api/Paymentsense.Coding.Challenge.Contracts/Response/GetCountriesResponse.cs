@@ -6,9 +6,4 @@ namespace Paymentsense.Coding.Challenge.Contracts.Response
     {
         public IEnumerable<Country> Countries { get; set; }
     }
-
-    public class Country
-    {
-        public string Name { get; set; }
-    }
 }

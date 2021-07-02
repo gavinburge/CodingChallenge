@@ -11,17 +11,21 @@ namespace Paymentsense.Coding.Challenge.Api.Controllers
     [Route("api/v1/countries")]
     public class CountriesController : ControllerBase
     {
-        private readonly IRequestHandler<GetCountriesQuery, GetCountriesResponse> _getCountriesHander;
+        private readonly IRequestHandler<GetCountriesQuery, GetCountriesResponse> _getCountriesHandler;
+        private readonly IRequestHandler<PaginatedGetCountriesQuery, PaginatedGetCountriesResponse> _paginatedGetCountriesHandler;
 
-        public CountriesController(IRequestHandler<GetCountriesQuery, GetCountriesResponse> getCountriesHander)
+        public CountriesController(
+            IRequestHandler<GetCountriesQuery, GetCountriesResponse> getCountriesHandler,
+            IRequestHandler<PaginatedGetCountriesQuery, PaginatedGetCountriesResponse> paginatedGetCountriesHandler)
         {
-            _getCountriesHander = getCountriesHander;
+            _getCountriesHandler = getCountriesHandler;
+            _paginatedGetCountriesHandler = paginatedGetCountriesHandler;
         }
 
         /// <summary>
         /// Gets a list of countries
         /// </summary>
-        /// <returns>A list of countries with additional details</returns>
+        /// <returns>A list of countries</returns>
         /// <response code="404">Could not find countries</response>
         /// <response code="500">Unexpected error occurred</response>
         [Route("")]
@@ -30,7 +34,24 @@ namespace Paymentsense.Coding.Challenge.Api.Controllers
         [ProducesResponseType(typeof(GetCountriesResponse), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetCountries()
         {
-            var response = await _getCountriesHander.Handle(new GetCountriesQuery());
+            var response = await _getCountriesHandler.Handle(new GetCountriesQuery()).ConfigureAwait(false);
+
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Gets a paged list of countries
+        /// </summary>
+        /// <returns>A paged list of countries</returns>
+        /// <response code="404">Could not find countries</response>
+        /// <response code="500">Unexpected error occurred</response>
+        [Route("paginated")]
+        [HttpGet]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(PaginatedGetCountriesResponse), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> PaginatedGetCountries([FromQuery] PaginatedGetCountriesQuery paginatedGetCountriesQuery)
+        {
+            var response = await _paginatedGetCountriesHandler.Handle(paginatedGetCountriesQuery).ConfigureAwait(false);
 
             return Ok(response);
         }

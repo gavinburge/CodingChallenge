@@ -44,4 +44,10 @@
     <ProjectReference Include="..\Paymentsense.Coding.Challenge.Api\Paymentsense.Coding.Challenge.Api.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="TestFramework\Countries.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

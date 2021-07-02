@@ -13,6 +13,7 @@ namespace Paymentsense.Coding.Challenge.Api.Tests.Controllers
     public class CountriesControllerTests
     {
         private Mock<IRequestHandler<GetCountriesQuery, GetCountriesResponse>> _mockGetCountriesHandler;
+        private Mock<IRequestHandler<PaginatedGetCountriesQuery, PaginatedGetCountriesResponse>> _mockPaginatedGetCountriesHandler;
         private CountriesController _countriesController;
 
         public CountriesControllerTests()
@@ -20,7 +21,11 @@ namespace Paymentsense.Coding.Challenge.Api.Tests.Controllers
             _mockGetCountriesHandler = new Mock<IRequestHandler<GetCountriesQuery, GetCountriesResponse>>();
             _mockGetCountriesHandler.Setup(c => c.Handle(It.IsAny<GetCountriesQuery>())).ReturnsAsync(new GetCountriesResponse());
 
-            _countriesController = new CountriesController(_mockGetCountriesHandler.Object);
+            _mockPaginatedGetCountriesHandler = new Mock<IRequestHandler<PaginatedGetCountriesQuery, PaginatedGetCountriesResponse>>();
+
+            _countriesController = new CountriesController(
+                _mockGetCountriesHandler.Object,
+                _mockPaginatedGetCountriesHandler.Object);
         }
 
         [Fact]

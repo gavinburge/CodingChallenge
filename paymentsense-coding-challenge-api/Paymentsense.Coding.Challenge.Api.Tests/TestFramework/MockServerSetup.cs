@@ -21,14 +21,12 @@ namespace Paymentsense.Coding.Challenge.Api.Tests.TestFramework
                     Response.Create()
                             .WithStatusCode(200)
                             .WithHeader("Content-Type", "application/json")
-                            .WithBody(SuccessResponse));
+                            .WithBodyFromFile("./TestFramework/Countries.json"));
         }
 
         public static void Stop()
         {
             MockServer.Stop();
         }
-
-        public const string SuccessResponse = "[{\"name\":\"Afghanistan\"},{\"name\":\"Åland Islands\"},{\"name\":\"Albania\"},{\"name\":\"Algeria\"}]";
     }
 }

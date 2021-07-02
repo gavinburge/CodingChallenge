@@ -18,11 +18,11 @@ namespace Paymentsense.Coding.Challenge.Core.Services
 
         public async Task<IEnumerable<Country>> GetCountriesAsync()
         {
-            var response = await _httpClient.GetAsync("/rest/v2/all?fields=name");
+            var response = await _httpClient.GetAsync("/rest/v2/all?fields=name").ConfigureAwait(false);
 
             response.EnsureSuccessStatusCode();
 
-            var responseString = await response.Content.ReadAsStringAsync();
+            var responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             return JsonConvert.DeserializeObject<IEnumerable<Country>>(responseString);
         }
     }

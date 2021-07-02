@@ -16,6 +16,7 @@ namespace Paymentsense.Coding.Challenge.Api.Extensions
         public static IServiceCollection AddHandlers(this IServiceCollection services)
         {
             services.AddTransient<IRequestHandler<GetCountriesQuery, GetCountriesResponse>, GetCountriesHandler>();
+            services.AddTransient<IRequestHandler<PaginatedGetCountriesQuery, PaginatedGetCountriesResponse>, PaginatedGetCountriesHandler>();
 
             return services;
         }

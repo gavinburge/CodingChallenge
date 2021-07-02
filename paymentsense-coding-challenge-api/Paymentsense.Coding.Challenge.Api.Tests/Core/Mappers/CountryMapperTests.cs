@@ -18,11 +18,10 @@ namespace Paymentsense.Coding.Challenge.Api.Tests.Core.Mappers
                 new Country { Name = "France" }
             };
 
-            var response = listOfCountries.ToGetCountriesResponse();
+            var contractCountries = listOfCountries.ToContractCountries();
 
-            response.Should().NotBeNull();
-            response.Countries.Should().NotBeNullOrEmpty();
-            response.Countries.Should().HaveCount(3);
+            contractCountries.Should().NotBeNull();
+            contractCountries.Should().HaveCount(3);
         }
 
         [Fact]
@@ -30,10 +29,10 @@ namespace Paymentsense.Coding.Challenge.Api.Tests.Core.Mappers
         {
             var listOfCountries = new List<Country>();
 
-            var response = listOfCountries.ToGetCountriesResponse();
+            var contractCountries = listOfCountries.ToContractCountries();
 
-            response.Should().NotBeNull();
-            response.Countries.Should().BeEmpty();
+            contractCountries.Should().NotBeNull();
+            contractCountries.Should().BeEmpty();
         }
 
         [Fact]
@@ -41,10 +40,10 @@ namespace Paymentsense.Coding.Challenge.Api.Tests.Core.Mappers
         {
             List<Country> listOfCountries = null;
 
-            var response = listOfCountries.ToGetCountriesResponse();
+            var contractCountries = listOfCountries.ToContractCountries();
 
-            response.Should().NotBeNull();
-            response.Countries.Should().BeEmpty();
+            contractCountries.Should().NotBeNull();
+            contractCountries.Should().BeEmpty();
         }
     }
 }
