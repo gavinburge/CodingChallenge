@@ -27,6 +27,8 @@ namespace Paymentsense.Coding.Challenge.Api.Extensions
                 c.BaseAddress = new Uri(configuration.GetValue<string>("RestCountriesUrl")); ;
             });
 
+            services.AddTransient<ICachingService, MemoryCachingService>();
+
             return services;
         }
 

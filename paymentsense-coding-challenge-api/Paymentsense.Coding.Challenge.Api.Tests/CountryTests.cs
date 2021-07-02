@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Paymentsense.Coding.Challenge.Api.Tests.TestFramework;
 using System;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using WireMock.RequestBuilders;
@@ -47,6 +48,27 @@ namespace Paymentsense.Coding.Challenge.Api.Tests
             var response = await _client.GetAsync("/api/v1/countries");
 
             response.StatusCode.Should().Be(StatusCodes.Status500InternalServerError);
+        }
+
+        [Fact]
+        public async Task Country_Called3Times_OnlyMakesExternalCallOnce()
+        {
+            var response = await _client.GetAsync("/api/v1/countries");
+            response.StatusCode.Should().Be(StatusCodes.Status200OK);
+
+            response = await _client.GetAsync("/api/v1/countries");
+            response.StatusCode.Should().Be(StatusCodes.Status200OK);
+
+            response = await _client.GetAsync("/api/v1/countries");
+            response.StatusCode.Should().Be(StatusCodes.Status200OK);
+
+            MockServerSetup
+                .MockServer
+                .FindLogEntries(Request.Create().WithPath("/rest/v2/all").UsingGet())
+                .ToList()
+                .Count()
+                .Should().Be(1);
+
         }
 
         void IDisposable.Dispose()
