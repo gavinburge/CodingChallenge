@@ -1,0 +1,19 @@
+table {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+th.mat-header-cell {
+    text-align: left;
+    background-color: darkgray;
+    font-weight: bold;
+}
+
+.mat-header-row, .mat-row {
+    width: 100%;
+}
+
+.name-column-width {
+    width: 100%;
+}

@@ -1,14 +1,16 @@
-import { Component } from '@angular/core';
-import { PaymentsenseCodingChallengeApiService } from './services';
+import { Component, OnInit } from '@angular/core';
+import { PaymentsenseCodingChallengeApiService } from '../../services';
 import { take } from 'rxjs/operators';
 import { faThumbsUp, faThumbsDown } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss']
 })
-export class AppComponent {
+
+export class HomeComponent {
+
   public faThumbsUp = faThumbsUp;
   public faThumbsDown = faThumbsDown;
   public title = 'Paymentsense Coding Challenge!';
