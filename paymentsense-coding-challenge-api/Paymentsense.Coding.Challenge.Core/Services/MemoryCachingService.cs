@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 using Paymentsense.Coding.Challenge.Core.Interfaces;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Paymentsense.Coding.Challenge.Core.Services
@@ -8,6 +9,7 @@ namespace Paymentsense.Coding.Challenge.Core.Services
     public class MemoryCachingService : ICachingService
     {
         private readonly IMemoryCache _cache;
+        private readonly SemaphoreSlim _cacheLock = new SemaphoreSlim(1);
 
         public MemoryCachingService(IMemoryCache cache)
         {
@@ -22,13 +24,22 @@ namespace Paymentsense.Coding.Challenge.Core.Services
         //and integration tests can test that it works functionally
         public async Task<T> GetOrAddAsync<T>(string cacheKey, Func<Task<T>> func)
         {
-            return await _cache.GetOrCreateAsync<T>(
-                cacheKey,
-                entry =>
-                {
-                    entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1);
-                    return func.Invoke();
-                }).ConfigureAwait(false);
+            //whilst memorycache is thread safe, if two threads were to call Get for the first time, then both could end up missing the cached result of the other,
+            //and both would make a call to the external service, this was proven with country spec test.
+            //using semphore slim to lock means only once will the service be called
+            await _cacheLock.WaitAsync();
+
+            var cachedData = await _cache.GetOrCreateAsync(
+                                                cacheKey,
+                                                entry =>
+                                                {
+                                                    entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1);
+                                                    return func.Invoke();
+                                                });
+
+            _cacheLock.Release();
+
+            return cachedData;
         }
     }
 }

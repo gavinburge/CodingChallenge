@@ -14,6 +14,7 @@ namespace Paymentsense.Coding.Challenge.Api.Tests.Controllers
     {
         private Mock<IRequestHandler<GetCountriesQuery, GetCountriesResponse>> _mockGetCountriesHandler;
         private Mock<IRequestHandler<PaginatedGetCountriesQuery, PaginatedGetCountriesResponse>> _mockPaginatedGetCountriesHandler;
+        private Mock<IRequestHandler<GetCountryDetailQuery, GetCountryDetailResponse>> _mockCountryDetailHandler;
         private CountriesController _countriesController;
 
         public CountriesControllerTests()
@@ -22,16 +23,34 @@ namespace Paymentsense.Coding.Challenge.Api.Tests.Controllers
             _mockGetCountriesHandler.Setup(c => c.Handle(It.IsAny<GetCountriesQuery>())).ReturnsAsync(new GetCountriesResponse());
 
             _mockPaginatedGetCountriesHandler = new Mock<IRequestHandler<PaginatedGetCountriesQuery, PaginatedGetCountriesResponse>>();
+            _mockCountryDetailHandler = new Mock<IRequestHandler<GetCountryDetailQuery, GetCountryDetailResponse>>();
 
             _countriesController = new CountriesController(
                 _mockGetCountriesHandler.Object,
-                _mockPaginatedGetCountriesHandler.Object);
+                _mockPaginatedGetCountriesHandler.Object,
+                _mockCountryDetailHandler.Object);
         }
 
         [Fact]
         public void Get_OnInvoke_ReturnsExpectedMessage()
         {
             var result = _countriesController.GetCountries().Result as OkObjectResult;
+
+            result.StatusCode.Should().Be(StatusCodes.Status200OK);
+        }
+
+        [Fact]
+        public void PaginatedGet_OnInvoke_ReturnsExpectedMessage()
+        {
+            var result = _countriesController.PaginatedGetCountries(new PaginatedGetCountriesQuery()).Result as OkObjectResult;
+
+            result.StatusCode.Should().Be(StatusCodes.Status200OK);
+        }
+
+        [Fact]
+        public void GetCountryDetails_OnInvoke_ReturnsExpectedMessage()
+        {
+            var result = _countriesController.GetCountryDetail(new GetCountryDetailQuery()).Result as OkObjectResult;
 
             result.StatusCode.Should().Be(StatusCodes.Status200OK);
         }

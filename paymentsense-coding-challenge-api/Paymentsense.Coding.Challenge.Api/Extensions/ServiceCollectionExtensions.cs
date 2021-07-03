@@ -17,6 +17,7 @@ namespace Paymentsense.Coding.Challenge.Api.Extensions
         {
             services.AddTransient<IRequestHandler<GetCountriesQuery, GetCountriesResponse>, GetCountriesHandler>();
             services.AddTransient<IRequestHandler<PaginatedGetCountriesQuery, PaginatedGetCountriesResponse>, PaginatedGetCountriesHandler>();
+            services.AddTransient<IRequestHandler<GetCountryDetailQuery, GetCountryDetailResponse>, GetCountryDetailHandler>();
 
             return services;
         }
@@ -28,7 +29,7 @@ namespace Paymentsense.Coding.Challenge.Api.Extensions
                 c.BaseAddress = new Uri(configuration.GetValue<string>("RestCountriesUrl")); ;
             });
 
-            services.AddTransient<ICachingService, MemoryCachingService>();
+            services.AddSingleton<ICachingService, MemoryCachingService>();
 
             return services;
         }

@@ -7,5 +7,6 @@ namespace Paymentsense.Coding.Challenge.Core.Interfaces
     public interface ICountryHttpClientService
     {
         Task<IEnumerable<Country>> GetCountriesAsync();
+        Task<CountryDetail> GetCountryDetailAsync(string country);
     }
 }

@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Paymentsense.Coding.Challenge.Core.Handlers
 {
-    public class GetCountriesHandler : IRequestHandler<GetCountriesQuery, GetCountriesResponse>
+    public class GetCountryDetailHandler : IRequestHandler<GetCountryDetailQuery, GetCountryDetailResponse>
     {
         private readonly ICountryHttpClientService _countryHttpClientService;
         private readonly ICachingService _cachingService;
 
-        public GetCountriesHandler(
+        public GetCountryDetailHandler(
             ICountryHttpClientService countryHttpClientService,
             ICachingService cachingService)
         {
@@ -19,19 +19,16 @@ namespace Paymentsense.Coding.Challenge.Core.Handlers
             _cachingService = cachingService;
         }
 
-        public async Task<GetCountriesResponse> Handle(GetCountriesQuery request)
+        public async Task<GetCountryDetailResponse> Handle(GetCountryDetailQuery request)
         {
-            var countries = await _cachingService.GetOrAddAsync(
-                CacheKeys.AllCountries,
+            var countryDetail = await _cachingService.GetOrAddAsync(
+                $"{CacheKeys.CountryDetail}{request.CountryName}",
                 () =>
                 {
-                    return _countryHttpClientService.GetCountriesAsync();
+                    return _countryHttpClientService.GetCountryDetailAsync(request.CountryName);
                 }).ConfigureAwait(false);
 
-            return new GetCountriesResponse
-            {
-                Countries = countries.ToContractCountries()
-            };
+            return countryDetail.ToGetCountryDetailResponse();
         }
     }
 }

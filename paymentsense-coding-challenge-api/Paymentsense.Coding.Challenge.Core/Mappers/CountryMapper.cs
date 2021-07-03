@@ -1,21 +1,56 @@
-﻿using System.Collections.Generic;
+﻿using Paymentsense.Coding.Challenge.Contracts.Dtos;
+using Paymentsense.Coding.Challenge.Contracts.Response;
+using Paymentsense.Coding.Challenge.Core.Models;
+using System.Collections.Generic;
 using System.Linq;
-using CoreCountry = Paymentsense.Coding.Challenge.Core.Models.Country;
-using ContractCountry = Paymentsense.Coding.Challenge.Contracts.Response.Country;
 
 namespace Paymentsense.Coding.Challenge.Core.Mappers
 {
     public static class CountryMapper
     {
-        public static IEnumerable<ContractCountry> ToContractCountries(this IEnumerable<CoreCountry> countries)
+        public static IEnumerable<CountryDto> ToContractCountries(this IEnumerable<Country> countries)
         {
             return countries?.Select(c =>
-                new ContractCountry
+                new CountryDto
                 {
                     Name = c.Name,
                     Flag = c.Flag
                 })
-                ?? new List<ContractCountry>();
+                ?? new List<CountryDto>();
+        }
+
+        public static GetCountryDetailResponse ToGetCountryDetailResponse(this CountryDetail countryDetail)
+        {
+            return new GetCountryDetailResponse
+            {
+                BorderingCountries = countryDetail.BorderingCountries,
+                CapitalCity = countryDetail.CapitalCity,
+                Currencies = countryDetail.Currencies.Select(c => c.ToCurrencyDto()).ToList(),
+                Languages = countryDetail.Languages.Select(l => l.ToLanguageDto()).ToList(),
+                Population = countryDetail.Population,
+                TimeZones = countryDetail.TimeZones
+            };
+        }
+
+        public static CurrencyDto ToCurrencyDto(this Currency currency)
+        {
+            return new CurrencyDto
+            {
+                Code = currency.Code,
+                Name = currency.Name,
+                Symbol = currency.Symbol
+            };
+        }
+
+        public static LanguageDto ToLanguageDto(this Language language)
+        {
+            return new LanguageDto
+            {
+                Iso639_1 = language.Iso639_1,
+                Iso639_2 = language.Iso639_2,
+                Name = language.Name,
+                NativeName = language.NativeName
+            };
         }
     }
 }

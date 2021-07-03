@@ -13,13 +13,16 @@ namespace Paymentsense.Coding.Challenge.Api.Controllers
     {
         private readonly IRequestHandler<GetCountriesQuery, GetCountriesResponse> _getCountriesHandler;
         private readonly IRequestHandler<PaginatedGetCountriesQuery, PaginatedGetCountriesResponse> _paginatedGetCountriesHandler;
+        private readonly IRequestHandler<GetCountryDetailQuery, GetCountryDetailResponse> _getCountryDetailHandler;
 
         public CountriesController(
             IRequestHandler<GetCountriesQuery, GetCountriesResponse> getCountriesHandler,
-            IRequestHandler<PaginatedGetCountriesQuery, PaginatedGetCountriesResponse> paginatedGetCountriesHandler)
+            IRequestHandler<PaginatedGetCountriesQuery, PaginatedGetCountriesResponse> paginatedGetCountriesHandler,
+            IRequestHandler<GetCountryDetailQuery, GetCountryDetailResponse> getCountryDetailHandler)
         {
             _getCountriesHandler = getCountriesHandler;
             _paginatedGetCountriesHandler = paginatedGetCountriesHandler;
+            _getCountryDetailHandler = getCountryDetailHandler;
         }
 
         /// <summary>
@@ -52,6 +55,23 @@ namespace Paymentsense.Coding.Challenge.Api.Controllers
         public async Task<IActionResult> PaginatedGetCountries([FromQuery] PaginatedGetCountriesQuery paginatedGetCountriesQuery)
         {
             var response = await _paginatedGetCountriesHandler.Handle(paginatedGetCountriesQuery).ConfigureAwait(false);
+
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Gets details of a specific country
+        /// </summary>
+        /// <returns>returns details for a specidic country such as population, time zones, currencies, language, capital city and bordering countries</returns>
+        /// <response code="404">Could not find specidic country</response>
+        /// <response code="500">Unexpected error occurred</response>
+        [Route("detail")]
+        [HttpGet]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(GetCountryDetailResponse), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetCountryDetail([FromQuery] GetCountryDetailQuery getCountryDetailQuery)
+        {
+            var response = await _getCountryDetailHandler.Handle(getCountryDetailQuery).ConfigureAwait(false);
 
             return Ok(response);
         }

@@ -2,7 +2,7 @@
 using WireMock.ResponseBuilders;
 using WireMock.Server;
 
-namespace Paymentsense.Coding.Challenge.Api.Tests.TestFramework
+namespace Paymentsense.Coding.Challenge.Api.Specs.TestFramework
 {
     public static class MockServerSetup
     {
