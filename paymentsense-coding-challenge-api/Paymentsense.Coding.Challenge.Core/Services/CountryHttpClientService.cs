@@ -18,7 +18,7 @@ namespace Paymentsense.Coding.Challenge.Core.Services
 
         public async Task<IEnumerable<Country>> GetCountriesAsync()
         {
-            var response = await _httpClient.GetAsync("/rest/v2/all?fields=name").ConfigureAwait(false);
+            var response = await _httpClient.GetAsync("/rest/v2/all?fields=name;flag").ConfigureAwait(false);
 
             response.EnsureSuccessStatusCode();
 

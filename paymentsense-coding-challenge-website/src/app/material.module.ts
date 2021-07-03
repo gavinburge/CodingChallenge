@@ -4,7 +4,8 @@ import {
     MatSidenavModule,
     MatToolbarModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    MatPaginatorModule
 } from '@angular/material'
 
 @NgModule({
@@ -12,13 +13,15 @@ import {
         MatSidenavModule,
         MatToolbarModule,
         MatIconModule,
-        MatListModule
+        MatListModule,
+        MatPaginatorModule
     ],
     exports: [
         MatSidenavModule,
         MatToolbarModule,
         MatIconModule,
-        MatListModule
+        MatListModule,
+        MatPaginatorModule
     ]
 })
 

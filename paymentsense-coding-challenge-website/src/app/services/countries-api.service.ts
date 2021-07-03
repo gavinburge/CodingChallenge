@@ -4,6 +4,8 @@ import { catchError, timeout, tap } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { IGetCountriesQuery } from './../models/queries/get-countries-query';
 import { IGetCountriesResponse } from './../models/queries/get-countries-response';
+import { IPaginatedGetCountriesQuery } from '../models/queries/paginated-get-countries-query';
+import { IPaginatedGetCountriesResponse } from '../models/queries/paginated-get-countries-response';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +18,15 @@ export class CountriesApiService {
     getCountries(request: IGetCountriesQuery) : Observable<IGetCountriesResponse> { 
         return this.httpClient
                     .get<IGetCountriesResponse>('https://localhost:44341/api/v1/countries')
+                    .pipe(
+                        tap(response => console.log('countries response', JSON.stringify(response))),
+                        timeout(30000), 
+                        catchError(this.processError));
+    }
+
+    paginatedGetCountries(request: IPaginatedGetCountriesQuery) : Observable<IPaginatedGetCountriesResponse> { 
+        return this.httpClient
+                    .get<IPaginatedGetCountriesResponse>(`https://localhost:44341/api/v1/countries/paginated?pageSize=${request.pageSize}&pageNumber=${request.pageNumber}`)
                     .pipe(
                         tap(response => console.log('countries response', JSON.stringify(response))),
                         timeout(30000), 
