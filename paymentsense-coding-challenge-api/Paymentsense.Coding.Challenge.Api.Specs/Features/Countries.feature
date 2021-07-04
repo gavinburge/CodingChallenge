@@ -33,3 +33,12 @@ Scenario: Get page 25 of countries
 	And the first country name should be 'Vanuatu'
 	And the last country name should be 'Zimbabwe'
 	And the total items should be 250
+
+#issue identified with caching lock where the semiphoreslim lock is not released on exception
+Scenario: When an error is returned subsequent call should be handled
+	Given the external data cannot be found 
+	When a request to get all countries
+	Then i should get back a 500 status
+	When a subsequent request is made for existing data
+	Then i should get back a 200 status
+	And i should get back 250 countries

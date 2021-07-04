@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Paymentsense.Coding.Challenge.Contracts.Dtos;
 using Paymentsense.Coding.Challenge.Contracts.Queries;
 using Paymentsense.Coding.Challenge.Contracts.Response;
 using Paymentsense.Coding.Challenge.Core.Interfaces;
@@ -47,7 +48,7 @@ namespace Paymentsense.Coding.Challenge.Api.Controllers
 
             _logger.LogDebug("Responding from GET country request with {@Response}", response);
 
-            return Ok(response);
+            return Ok(BaseApiResponseDto<GetCountriesResponse>.SuccessResult(response));
         }
 
         /// <summary>
@@ -68,7 +69,7 @@ namespace Paymentsense.Coding.Challenge.Api.Controllers
 
             _logger.LogDebug("Responding from GET paginated country request with {@Response}", response);
 
-            return Ok(response);
+            return Ok(BaseApiResponseDto<PaginatedGetCountriesResponse>.SuccessResult(response));
         }
 
         /// <summary>
@@ -85,7 +86,7 @@ namespace Paymentsense.Coding.Challenge.Api.Controllers
         {
             var response = await _getCountryDetailHandler.Handle(getCountryDetailQuery).ConfigureAwait(false);
 
-            return Ok(response);
+            return Ok(BaseApiResponseDto<GetCountryDetailResponse>.SuccessResult(response));
         }
     }
 }

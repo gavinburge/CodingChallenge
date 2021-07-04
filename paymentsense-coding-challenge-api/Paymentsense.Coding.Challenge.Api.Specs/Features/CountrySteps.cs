@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Newtonsoft.Json;
 using Paymentsense.Coding.Challenge.Api.Specs.TestFramework;
+using Paymentsense.Coding.Challenge.Contracts.Dtos;
 using Paymentsense.Coding.Challenge.Contracts.Response;
 using System.Linq;
 using System.Net;
@@ -21,7 +22,7 @@ namespace Paymentsense.Coding.Challenge.Api.Specs.Features
         private Task<HttpResponseMessage> _request1;
         private Task<HttpResponseMessage> _request2;
         private Task<HttpResponseMessage> _request3;
-        private PaginatedGetCountriesResponse _getCountriesResponse;
+        private BaseApiResponseDto<PaginatedGetCountriesResponse> _getCountriesResponse;
 
         public CountrySteps()
         {
@@ -65,6 +66,24 @@ namespace Paymentsense.Coding.Challenge.Api.Specs.Features
             _httpResponseMessage = await _client.GetAsync($"/api/v1/countries/paginated?PageNumber={pageNumber}&PageSize={pageSize}");
         }
 
+        [When(@"a subsequent request is made for existing data")]
+        public async Task WhenASubsequentRequestIsMadeForExistingData()
+        {
+            MockServerSetup.MockServer.Reset();
+            MockServerSetup.MockServer.Given(
+                                        Request.Create()
+                                                .WithPath("/rest/v2/all")
+                                                .UsingGet())
+                                        .RespondWith(
+                                            Response.Create()
+                                                    .WithStatusCode(200)
+                                                    .WithHeader("Content-Type", "application/json")
+                                                    .WithBodyFromFile("./TestFramework/Countries.json"));
+
+            _httpResponseMessage = await _client.GetAsync("/api/v1/countries");
+        }
+
+
         [Then(@"i should get back 3 200 status")]
         public void ThenIShouldGetBackStatus()
         {
@@ -94,41 +113,42 @@ namespace Paymentsense.Coding.Challenge.Api.Specs.Features
         public async Task ThenIShouldGetBackCountries(int numberOfCountries)
         {
             var responseString = await _httpResponseMessage.Content.ReadAsStringAsync();
-            _getCountriesResponse = JsonConvert.DeserializeObject<PaginatedGetCountriesResponse>(responseString);
+            _getCountriesResponse = JsonConvert.DeserializeObject<BaseApiResponseDto<PaginatedGetCountriesResponse>>(responseString);
 
             _getCountriesResponse.Should().NotBeNull();
-            _getCountriesResponse.Countries.Should().NotBeNullOrEmpty();
-            _getCountriesResponse.Countries.Should().HaveCount(numberOfCountries);
+            _getCountriesResponse.Data.Should().NotBeNull();
+            _getCountriesResponse.Data.Countries.Should().NotBeNullOrEmpty();
+            _getCountriesResponse.Data.Countries.Should().HaveCount(numberOfCountries);
         }
 
         [Then(@"the first country name should be '(.*)'")]
         public void ThenTheFirstCountryNameShouldBe(string countryName)
         {
-            _getCountriesResponse.Countries.First().Name.Should().Be(countryName);            
+            _getCountriesResponse.Data.Countries.First().Name.Should().Be(countryName);            
         }
 
         [Then(@"the first flag should be '(.*)'")]
         public void ThenTheFirstFlagShouldBe(string flag)
         {
-            _getCountriesResponse.Countries.First().Flag.Should().Be(flag);
+            _getCountriesResponse.Data.Countries.First().Flag.Should().Be(flag);
         }
 
         [Then(@"the last country name should be '(.*)'")]
         public void ThenTheLastCountryNameShouldBe(string countryName)
         {
-            _getCountriesResponse.Countries.Last().Name.Should().Be(countryName);
+            _getCountriesResponse.Data.Countries.Last().Name.Should().Be(countryName);
         }
 
         [Then(@"the last flag should be '(.*)'")]
         public void ThenTheLastFlagShouldBe(string flag)
         {
-            _getCountriesResponse.Countries.Last().Flag.Should().Be(flag);
+            _getCountriesResponse.Data.Countries.Last().Flag.Should().Be(flag);
         }
 
         [Then(@"the total items should be (.*)")]
         public void ThenTheTotalItemsShouldBe(int totalItems)
         {
-            _getCountriesResponse.TotalItems.Should().Be(totalItems);
+            _getCountriesResponse.Data.TotalItems.Should().Be(totalItems);
         }
 
     }

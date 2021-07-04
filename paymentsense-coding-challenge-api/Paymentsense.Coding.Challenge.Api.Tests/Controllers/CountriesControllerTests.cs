@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using Paymentsense.Coding.Challenge.Api.Controllers;
 using Paymentsense.Coding.Challenge.Contracts.Queries;
@@ -28,7 +29,8 @@ namespace Paymentsense.Coding.Challenge.Api.Tests.Controllers
             _countriesController = new CountriesController(
                 _mockGetCountriesHandler.Object,
                 _mockPaginatedGetCountriesHandler.Object,
-                _mockCountryDetailHandler.Object);
+                _mockCountryDetailHandler.Object,
+                new NullLogger<CountriesController>());
         }
 
         [Fact]

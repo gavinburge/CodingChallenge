@@ -27,12 +27,14 @@ namespace Paymentsense.Coding.Challenge.Core.Services
         //and integration tests can test that it works functionally
         public async Task<T> GetOrAddAsync<T>(string cacheKey, Func<Task<T>> func)
         {
-            //whilst memorycache is thread safe, if two threads were to call Get for the first time, then both could end up missing the cached result of the other,
-            //and both would make a call to the external service, this was proven with country spec test.
-            //using semphore slim to lock means only once will the service be called
-            await _cacheLock.WaitAsync();
+            try
+            {
+                //whilst memorycache is thread safe, if two threads were to call Get for the first time, then both could end up missing the cached result of the other,
+                //and both would make a call to the external service, this was proven with country spec test.
+                //using semphore slim to lock means only once will the service be called
+                await _cacheLock.WaitAsync();
 
-            var cachedData = await _cache.GetOrCreateAsync(
+                var cachedData = await _cache.GetOrCreateAsync(
                                                 cacheKey,
                                                 entry =>
                                                 {
@@ -41,9 +43,12 @@ namespace Paymentsense.Coding.Challenge.Core.Services
                                                     return func.Invoke();
                                                 });
 
-            _cacheLock.Release();
-
-            return cachedData;
+                return cachedData;
+            }
+            finally
+            {
+                _cacheLock.Release();
+            }
         }
     }
 }

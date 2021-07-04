@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using Paymentsense.Coding.Challenge.Core.Handlers;
 using Paymentsense.Coding.Challenge.Core.Interfaces;
@@ -24,7 +25,8 @@ namespace Paymentsense.Coding.Challenge.Api.Tests.Core.Handlers
 
             _paginatedGetCountriesHandler = new PaginatedGetCountriesHandler(
                 _mockCountryHttpClientService.Object,
-                _mockCache.Object);
+                _mockCache.Object,
+                new NullLogger<PaginatedGetCountriesHandler>());
         }
 
         [Fact]

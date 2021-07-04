@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Paymentsense.Coding.Challenge.Api.Extensions;
+using Paymentsense.Coding.Challenge.Api.Middleware;
 
 namespace Paymentsense.Coding.Challenge.Api
 {
@@ -55,6 +56,8 @@ namespace Paymentsense.Coding.Challenge.Api
             app.UseCors("PaymentsenseCodingChallengeOriginPolicy");
 
             app.UseRouting();
+
+            app.UseMiddleware<ErrorHandlingMiddleware>();
 
             app.UseAuthorization();
 
