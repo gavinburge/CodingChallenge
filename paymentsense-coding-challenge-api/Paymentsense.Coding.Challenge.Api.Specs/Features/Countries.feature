@@ -42,3 +42,7 @@ Scenario: When an error is returned subsequent call should be handled
 	When a subsequent request is made for existing data
 	Then i should get back a 200 status
 	And i should get back 250 countries
+
+Scenario: Bad request returned when invalid characters are used in country detail query
+	Given a request to get country details with invalid characters 
+	Then i should get back a 400 status

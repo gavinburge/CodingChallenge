@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using FluentValidation;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Paymentsense.Coding.Challenge.Contracts.Queries;
@@ -6,6 +7,8 @@ using Paymentsense.Coding.Challenge.Contracts.Response;
 using Paymentsense.Coding.Challenge.Core.Handlers;
 using Paymentsense.Coding.Challenge.Core.Interfaces;
 using Paymentsense.Coding.Challenge.Core.Services;
+using Paymentsense.Coding.Challenge.Core.Validators;
+using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
 
@@ -30,6 +33,13 @@ namespace Paymentsense.Coding.Challenge.Api.Extensions
             });
 
             services.AddSingleton<ICachingService, MemoryCachingService>();
+
+            return services;
+        }
+
+        public static IServiceCollection AddValidators(this IServiceCollection services)
+        {
+            services.AddTransient<IValidator<GetCountryDetailQuery>, GetCountryDetailQueryValidator>();
 
             return services;
         }

@@ -1,3 +1,5 @@
+using FluentValidation.AspNetCore;
+using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -5,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Paymentsense.Coding.Challenge.Api.Extensions;
 using Paymentsense.Coding.Challenge.Api.Middleware;
+using Paymentsense.Coding.Challenge.Core.Validators;
 
 namespace Paymentsense.Coding.Challenge.Api
 {
@@ -20,7 +23,13 @@ namespace Paymentsense.Coding.Challenge.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services
+                .AddControllers()
+                .AddFluentValidation(o =>
+                {
+                    o.RegisterValidatorsFromAssemblyContaining<GetCountryDetailQueryValidator>();
+                });
+
             services.AddHealthChecks();
             services.AddCors(options =>
             {
@@ -33,11 +42,14 @@ namespace Paymentsense.Coding.Challenge.Api
             });
 
             services.AddHandlers()
-                    .AddServices(Configuration);
+                    .AddServices(Configuration)
+                    .AddValidators();
 
             if(Configuration.GetValue<bool>("EnableSwagger"))
             {
-                services.AddSwaggerConfig();
+                services
+                    .AddSwaggerConfig()
+                    .AddFluentValidationRulesToSwagger();
             }
 
             services.AddMemoryCache();

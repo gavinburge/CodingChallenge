@@ -66,6 +66,12 @@ namespace Paymentsense.Coding.Challenge.Api.Specs.Features
             _httpResponseMessage = await _client.GetAsync($"/api/v1/countries/paginated?PageNumber={pageNumber}&PageSize={pageSize}");
         }
 
+        [Given(@"a request to get country details with invalid characters")]
+        public async Task GivenARequestToGetCountryDetailsWithInvalidCharacters()
+        {
+            _httpResponseMessage = await _client.GetAsync($"/api/v1/countries/detail?countryName=123@!");
+        }
+
         [When(@"a subsequent request is made for existing data")]
         public async Task WhenASubsequentRequestIsMadeForExistingData()
         {
