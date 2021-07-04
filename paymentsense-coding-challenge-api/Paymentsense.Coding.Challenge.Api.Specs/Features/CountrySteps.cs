@@ -72,8 +72,8 @@ namespace Paymentsense.Coding.Challenge.Api.Specs.Features
             _httpResponseMessage = await _client.GetAsync($"/api/v1/countries/detail?countryName=123@!");
         }
 
-        [When(@"a subsequent request is made for existing data")]
-        public async Task WhenASubsequentRequestIsMadeForExistingData()
+        [Given(@"external call returns a 500 status code")]
+        public void GivenExternalCallReturnsAStatusCode()
         {
             MockServerSetup.MockServer.Reset();
             MockServerSetup.MockServer.Given(
@@ -82,9 +82,27 @@ namespace Paymentsense.Coding.Challenge.Api.Specs.Features
                                                 .UsingGet())
                                         .RespondWith(
                                             Response.Create()
-                                                    .WithStatusCode(200)
+                                                    .WithStatusCode(500)
                                                     .WithHeader("Content-Type", "application/json")
-                                                    .WithBodyFromFile("./TestFramework/Countries.json"));
+                                                    .WithBody("Internal server error"));
+        }
+
+        [Then(@"(.*) attempts to call the service should have been made")]
+        public void ThenAttemptsToCallTheServiceShouldHaveBeenMade(int p0)
+        {
+            MockServerSetup
+                .MockServer
+                .FindLogEntries(Request.Create().WithPath("/rest/v2/all").UsingGet())
+                .ToList()
+                .Count()
+                .Should().Be(3);
+        }
+
+
+        [When(@"a subsequent request is made for existing data")]
+        public async Task WhenASubsequentRequestIsMadeForExistingData()
+        {
+            MockServerSetup.Reset();
 
             _httpResponseMessage = await _client.GetAsync("/api/v1/countries");
         }

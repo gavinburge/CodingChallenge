@@ -12,6 +12,18 @@ namespace Paymentsense.Coding.Challenge.Api.Specs.TestFramework
         {
             MockServer = WireMockServer.Start(port: 44342);
 
+            Reset();
+        }
+
+        public static void Stop()
+        {
+            MockServer.Stop();
+        }
+
+        public static void Reset()
+        {
+            MockServer.Reset();
+
             MockServer
                 .Given(
                     Request.Create()
@@ -22,11 +34,6 @@ namespace Paymentsense.Coding.Challenge.Api.Specs.TestFramework
                             .WithStatusCode(200)
                             .WithHeader("Content-Type", "application/json")
                             .WithBodyFromFile("./TestFramework/Countries.json"));
-        }
-
-        public static void Stop()
-        {
-            MockServer.Stop();
         }
     }
 }

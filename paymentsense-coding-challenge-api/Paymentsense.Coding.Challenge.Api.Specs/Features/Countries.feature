@@ -46,3 +46,9 @@ Scenario: When an error is returned subsequent call should be handled
 Scenario: Bad request returned when invalid characters are used in country detail query
 	Given a request to get country details with invalid characters 
 	Then i should get back a 400 status
+
+Scenario: When a 5xx error is returned from external service then it should be retried 2 times
+	Given external call returns a 500 status code 
+	When a request to get all countries
+	Then i should get back a 500 status
+	And 3 attempts to call the service should have been made

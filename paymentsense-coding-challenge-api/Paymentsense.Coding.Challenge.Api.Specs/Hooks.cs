@@ -19,5 +19,11 @@ namespace Paymentsense.Coding.Challenge.Api.Specs
             MockServerSetup.Stop();
             TestServerSetup.StopServer();
         }
+
+        [BeforeScenario]
+        public static void ResetMocks()
+        {
+            MockServerSetup.Reset();
+        }
     }
 }

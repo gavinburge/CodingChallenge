@@ -8,9 +8,11 @@ using Paymentsense.Coding.Challenge.Core.Handlers;
 using Paymentsense.Coding.Challenge.Core.Interfaces;
 using Paymentsense.Coding.Challenge.Core.Services;
 using Paymentsense.Coding.Challenge.Core.Validators;
-using Swashbuckle.AspNetCore.Swagger;
+using Polly;
+using Polly.Extensions.Http;
 using System;
 using System.IO;
+using System.Net.Http;
 
 namespace Paymentsense.Coding.Challenge.Api.Extensions
 {
@@ -28,9 +30,10 @@ namespace Paymentsense.Coding.Challenge.Api.Extensions
         public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddHttpClient<ICountryHttpClientService, CountryHttpClientService>(c =>
-            {
-                c.BaseAddress = new Uri(configuration.GetValue<string>("RestCountriesUrl")); ;
-            });
+                    {
+                        c.BaseAddress = new Uri(configuration.GetValue<string>("RestCountriesUrl")); ;
+                    })
+                    .AddPolicyHandler(GetRetryPolicy());
 
             services.AddSingleton<ICachingService, MemoryCachingService>();
 
@@ -73,6 +76,13 @@ namespace Paymentsense.Coding.Challenge.Api.Extensions
             });
 
             return services;
+        }
+
+        private static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
+        {
+            return HttpPolicyExtensions
+                    .HandleTransientHttpError()
+                    .WaitAndRetryAsync(2, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
         }
     }
 }
