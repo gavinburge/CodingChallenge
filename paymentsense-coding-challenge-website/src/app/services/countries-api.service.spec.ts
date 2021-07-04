@@ -10,104 +10,104 @@ import { IPaginatedGetCountriesResponse } from '../models/queries/paginated-get-
 
 describe('countries-api.service', () => {
 
-  let countriesApiService : CountriesApiService;  
+  let countriesApiService: CountriesApiService;
   let httpTestingController: HttpTestingController;
 
   beforeEach(async(() => { // 3
-      TestBed.configureTestingModule({
-        imports: [HttpClientTestingModule],
-        providers: [CountriesApiService],
-      }).compileComponents();
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [CountriesApiService],
+    }).compileComponents();
 
-      countriesApiService = TestBed.get(CountriesApiService);
-      httpTestingController = TestBed.get(HttpTestingController)
+    countriesApiService = TestBed.get(CountriesApiService);
+    httpTestingController = TestBed.get(HttpTestingController)
   }));
 
   afterEach(() => {
-      httpTestingController.verify();
+    httpTestingController.verify();
   })
 
-  const getCountryResponseFake : IGetCountriesResponse = {
-      countries : [
-            { name: 'UK', flag: 'http://1' },
-            { name: 'US', flag: 'http://1' },
-            { name: 'France', flag: 'http://1' }
-        ]
-  }; 
+  const getCountryResponseFake: IGetCountriesResponse = {
+    countries: [
+      { name: 'UK', flag: 'http://1' },
+      { name: 'US', flag: 'http://1' },
+      { name: 'France', flag: 'http://1' }
+    ]
+  };
 
-  const paginatedGetCountryResponseFake : IPaginatedGetCountriesResponse = {
-    countries : [
-          { name: 'UK', flag: 'http://1' },
-          { name: 'US', flag: 'http://1' },
-          { name: 'France', flag: 'http://1' }
-      ],
-    pageNumber : 1,
-    pageSize : 10,
-    totalItems : 250
-}; 
+  const paginatedGetCountryResponseFake: IPaginatedGetCountriesResponse = {
+    countries: [
+      { name: 'UK', flag: 'http://1' },
+      { name: 'US', flag: 'http://1' },
+      { name: 'France', flag: 'http://1' }
+    ],
+    pageNumber: 1,
+    pageSize: 10,
+    totalItems: 250
+  };
 
   it(`should call the get countries endpoint to get a full list of countries`, () => {
-    let request : IGetCountriesQuery = {};
+    let request: IGetCountriesQuery = {};
 
     countriesApiService.getCountries(request).subscribe(result => {
-        expect(result.countries.length).toEqual(getCountryResponseFake.countries.length);
-        expect(result.countries).toEqual(getCountryResponseFake.countries);
+      expect(result.countries.length).toEqual(getCountryResponseFake.countries.length);
+      expect(result.countries).toEqual(getCountryResponseFake.countries);
     });
 
-    const countriesRequest : TestRequest = httpTestingController.expectOne(`https://localhost:44341/api/v1/countries`);
+    const countriesRequest: TestRequest = httpTestingController.expectOne(`https://localhost:44341/api/v1/countries`);
     expect(countriesRequest.request.method).toEqual('GET');
 
     countriesRequest.flush(getCountryResponseFake);
   });
 
   it(`should call the get countries endpoint and receive an error`, () => {
-    let request : IGetCountriesQuery = {};
+    let request: IGetCountriesQuery = {};
 
     countriesApiService.getCountries(request).subscribe(result => {
-        fail('we are expecting an error for this test')
+      fail('we are expecting an error for this test')
     },
-    (error : string) => {
+      (error: string) => {
         expect(error).toEqual('Server encuntered an error')
-    });
+      });
 
-    const countriesRequest : TestRequest = httpTestingController.expectOne(`https://localhost:44341/api/v1/countries`);
+    const countriesRequest: TestRequest = httpTestingController.expectOne(`https://localhost:44341/api/v1/countries`);
     countriesRequest.flush('whoops we got an error', { status: 500, statusText: "Error here" });
   });
 
   it(`should call the paginated get countries endpoint to get a paged list of countries`, () => {
-    let request : IPaginatedGetCountriesQuery = {
-      pageSize : 10,
-      pageNumber : 1
+    let request: IPaginatedGetCountriesQuery = {
+      pageSize: 10,
+      pageNumber: 1
     };
 
     countriesApiService.paginatedGetCountries(request).subscribe(result => {
-        expect(result.countries.length).toEqual(paginatedGetCountryResponseFake.countries.length);
-        expect(result.countries).toEqual(paginatedGetCountryResponseFake.countries);
-        expect(result.pageNumber).toEqual(1);
-        expect(result.pageSize).toEqual(10);
-        expect(result.totalItems).toEqual(250);
+      expect(result.countries.length).toEqual(paginatedGetCountryResponseFake.countries.length);
+      expect(result.countries).toEqual(paginatedGetCountryResponseFake.countries);
+      expect(result.pageNumber).toEqual(paginatedGetCountryResponseFake.pageNumber);
+      expect(result.pageSize).toEqual(paginatedGetCountryResponseFake.pageSize);
+      expect(result.totalItems).toEqual(paginatedGetCountryResponseFake.totalItems);
     });
 
-    const countriesRequest : TestRequest = httpTestingController.expectOne(`https://localhost:44341/api/v1/countries/paginated`);
+    const countriesRequest: TestRequest = httpTestingController.expectOne(`https://localhost:44341/api/v1/countries/paginated?pageSize=${request.pageSize}&pageNumber=${request.pageNumber}`);
     expect(countriesRequest.request.method).toEqual('GET');
 
-    countriesRequest.flush(getCountryResponseFake);
+    countriesRequest.flush(paginatedGetCountryResponseFake);
   });
 
   it(`should call the get countries endpoint and receive an error`, () => {
-    let request : IPaginatedGetCountriesQuery = {
-      pageSize : 10,
-      pageNumber : 1
+    let request: IPaginatedGetCountriesQuery = {
+      pageSize: 10,
+      pageNumber: 1
     };
 
     countriesApiService.paginatedGetCountries(request).subscribe(result => {
-        fail('we are expecting an error for this test')
+      fail('we are expecting an error for this test')
     },
-    (error : string) => {
+      (error: string) => {
         expect(error).toEqual('Server encuntered an error')
-    });
+      });
 
-    const countriesRequest : TestRequest = httpTestingController.expectOne(`https://localhost:44341/api/v1/countries/paginated`);
+    const countriesRequest: TestRequest = httpTestingController.expectOne(`https://localhost:44341/api/v1/countries/paginated?pageSize=${request.pageSize}&pageNumber=${request.pageNumber}`);
     countriesRequest.flush('whoops we got an error', { status: 500, statusText: "Error here" });
   });
 

@@ -31,7 +31,7 @@ import { CountryDetailComponent } from './components/country-detail/country-deta
     HttpClientModule,
     FontAwesomeModule,
     MaterialModule,
-    BsDropdownModule.forRoot(),
+    BsDropdownModule.forRoot()
   ],
   providers: [
     PaymentsenseCodingChallengeApiService,

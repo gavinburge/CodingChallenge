@@ -5,23 +5,24 @@ import { IPaginatedGetCountriesResponse } from "../models/queries/paginated-get-
 
 @Injectable({
     providedIn: 'root'
-  })
-  export class MockCountriesApiService {
-  
-      getPaginatedCountries(request: IPaginatedGetCountriesQuery) : Observable<IPaginatedGetCountriesResponse> { 
-          let result :  IPaginatedGetCountriesResponse = {
-                  pageSize: 5,
-                  pageNumber: 1,
-                  totalItems: 3,
-                  countries: [
-                      { name: 'UK', flag: 'mockUkFlag' },
-                      { name: 'US', flag: 'mockUSFlag' },
-                      { name: 'France', flag: 'mockFranceFlag' },
-                      { name: 'Germany', flag: 'mockGermanyFlag' },
-                      { name: 'Italy', flag: 'mockItalyFlag' },
-                  ]
-              };
-  
-          return of(result);
-      }
-  }
+})
+
+export class MockCountriesApiService {
+
+    paginatedGetCountries(request: IPaginatedGetCountriesQuery): Observable<IPaginatedGetCountriesResponse> {
+        let result: IPaginatedGetCountriesResponse = {
+            pageSize: 5,
+            pageNumber: 1,
+            totalItems: 3,
+            countries: [
+                { name: 'UK', flag: 'mockUkFlag' },
+                { name: 'US', flag: 'mockUSFlag' },
+                { name: 'France', flag: 'mockFranceFlag' },
+                { name: 'Germany', flag: 'mockGermanyFlag' },
+                { name: 'Italy', flag: 'mockItalyFlag' },
+            ]
+        };
+
+        return of(result);
+    }
+}

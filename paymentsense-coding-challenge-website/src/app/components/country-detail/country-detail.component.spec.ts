@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { MatCardModule, MatDialogModule, MatListModule, MAT_DIALOG_DATA } from '@angular/material';
+import { IGetCountryDetailResponse } from 'src/app/models/queries/get-country-detail-response';
 import { CountryDetailComponent } from './country-detail.component';
 
 describe('CountryDetailComponent', () => {
@@ -8,9 +9,30 @@ describe('CountryDetailComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CountryDetailComponent ]
+      imports: [
+        MatCardModule,
+        MatListModule,
+        MatDialogModule
+      ],
+      declarations: [CountryDetailComponent],
+      providers: [{
+        provide: MAT_DIALOG_DATA, useValue: () => {
+          let response: IGetCountryDetailResponse = {
+            name: "France",
+            flag: "http://",
+            capitalCity: "paris",
+            population: 12345,
+            borderingCountries: ["POR", "BEL"],
+            currencies: [],
+            languages: [],
+            timeZones: []
+          }
+
+          return response;
+        }
+      }]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -1,3 +1,4 @@
+import { trigger } from '@angular/animations';
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { MatPaginator } from '@angular/material/paginator';
@@ -12,7 +13,7 @@ import { CountriesDataSource } from './countries.datasource';
 @Component({
   selector: 'app-countries',
   templateUrl: './countries.component.html',
-  styleUrls: ['./countries.component.scss']
+  styleUrls: ['./countries.component.scss'],
 })
 export class CountriesComponent implements AfterViewInit, OnInit, OnDestroy {
 
