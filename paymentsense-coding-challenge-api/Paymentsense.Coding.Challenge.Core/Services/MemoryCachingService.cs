@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Logging;
 using Paymentsense.Coding.Challenge.Core.Interfaces;
 using System;
 using System.Threading;
@@ -9,11 +10,13 @@ namespace Paymentsense.Coding.Challenge.Core.Services
     public class MemoryCachingService : ICachingService
     {
         private readonly IMemoryCache _cache;
+        private readonly ILogger<MemoryCachingService> _logger;
         private readonly SemaphoreSlim _cacheLock = new SemaphoreSlim(1);
 
-        public MemoryCachingService(IMemoryCache cache)
+        public MemoryCachingService(IMemoryCache cache, ILogger<MemoryCachingService> logger)
         {
             _cache = cache;
+            _logger = logger;
         }
 
         //abstracted away caching technique
@@ -34,6 +37,7 @@ namespace Paymentsense.Coding.Challenge.Core.Services
                                                 entry =>
                                                 {
                                                     entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1);
+                                                    _logger.LogInformation($"Retrieving data for cache key {cacheKey}");
                                                     return func.Invoke();
                                                 });
 

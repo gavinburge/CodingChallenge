@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Paymentsense.Coding.Challenge.Contracts.Queries;
 using Paymentsense.Coding.Challenge.Contracts.Response;
 using Paymentsense.Coding.Challenge.Core.Interfaces;
@@ -14,15 +15,18 @@ namespace Paymentsense.Coding.Challenge.Api.Controllers
         private readonly IRequestHandler<GetCountriesQuery, GetCountriesResponse> _getCountriesHandler;
         private readonly IRequestHandler<PaginatedGetCountriesQuery, PaginatedGetCountriesResponse> _paginatedGetCountriesHandler;
         private readonly IRequestHandler<GetCountryDetailQuery, GetCountryDetailResponse> _getCountryDetailHandler;
+        private readonly ILogger<CountriesController> _logger;
 
         public CountriesController(
             IRequestHandler<GetCountriesQuery, GetCountriesResponse> getCountriesHandler,
             IRequestHandler<PaginatedGetCountriesQuery, PaginatedGetCountriesResponse> paginatedGetCountriesHandler,
-            IRequestHandler<GetCountryDetailQuery, GetCountryDetailResponse> getCountryDetailHandler)
+            IRequestHandler<GetCountryDetailQuery, GetCountryDetailResponse> getCountryDetailHandler,
+            ILogger<CountriesController> logger)
         {
             _getCountriesHandler = getCountriesHandler;
             _paginatedGetCountriesHandler = paginatedGetCountriesHandler;
             _getCountryDetailHandler = getCountryDetailHandler;
+            _logger = logger;
         }
 
         /// <summary>
@@ -37,7 +41,11 @@ namespace Paymentsense.Coding.Challenge.Api.Controllers
         [ProducesResponseType(typeof(GetCountriesResponse), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetCountries()
         {
+            _logger.LogInformation("Received GET country request");
+
             var response = await _getCountriesHandler.Handle(new GetCountriesQuery()).ConfigureAwait(false);
+
+            _logger.LogDebug("Responding from GET country request with {@Response}", response);
 
             return Ok(response);
         }
@@ -54,7 +62,11 @@ namespace Paymentsense.Coding.Challenge.Api.Controllers
         [ProducesResponseType(typeof(PaginatedGetCountriesResponse), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> PaginatedGetCountries([FromQuery] PaginatedGetCountriesQuery paginatedGetCountriesQuery)
         {
+            _logger.LogInformation("Received GET paginated country request for page number {PageNumber} and page size {PageSize}", paginatedGetCountriesQuery.PageNumber, paginatedGetCountriesQuery.PageSize);
+
             var response = await _paginatedGetCountriesHandler.Handle(paginatedGetCountriesQuery).ConfigureAwait(false);
+
+            _logger.LogDebug("Responding from GET paginated country request with {@Response}", response);
 
             return Ok(response);
         }
