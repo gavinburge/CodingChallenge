@@ -1,0 +1,66 @@
+<mat-card class="card-style">
+  <mat-card-header class="card-header-style">
+    <mat-card-title class="card-title-style">
+      <img class="flag-style" src="{{ countryDetail?.flag }}" />
+      {{ countryDetail?.name }}
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content class="card-content-style">
+    <div class="row">
+      <div class="col-sm-4">
+        <mat-list>
+          <h3 matSubheader>Capital City:</h3>
+          <mat-list-item>
+            <p matLine>{{ countryDetail?.capitalCity }}</p>
+          </mat-list-item>
+        </mat-list>
+      </div>
+
+      <div class="col-sm-4">
+        <mat-list>
+          <h3 matSubheader>Population:</h3>
+          <mat-list-item>
+            <p matLine>{{ countryDetail?.population }}</p>
+          </mat-list-item>
+        </mat-list>
+      </div>
+
+      <div class="col-sm-4"></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <mat-list>
+          <h3 matSubheader>Languages:</h3>
+          <mat-list-item *ngFor="let language of countryDetail?.languages">
+            <p matLine>{{ language.name }} ({{ language.nativeName }})</p>
+          </mat-list-item>
+        </mat-list>
+      </div>
+
+      <div class="col-sm-4">
+        <mat-list>
+          <h3 matSubheader>Bordering Countries:</h3>
+          <mat-list-item class="mat-list-tem-style"
+            *ngFor="let border of countryDetail?.borderingCountries"
+          >
+            <p matLine>{{ border }}</p>
+          </mat-list-item>
+        </mat-list>
+      </div>
+
+      <div class="col-sm-4">
+        <mat-list>
+          <h3 matSubheader>Time Zones:</h3>
+          <mat-list-item *ngFor="let zone of countryDetail?.timeZones">
+            <p matLine>{{ zone }}</p>
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </div>
+
+    <mat-dialog-actions>
+      <button mat-raised-button [mat-dialog-close]="false">Close</button>
+    </mat-dialog-actions>
+  </mat-card-content>
+</mat-card>

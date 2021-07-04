@@ -5,6 +5,8 @@ namespace Paymentsense.Coding.Challenge.Contracts.Response
 {
     public class GetCountryDetailResponse : IResponse
     {
+        public string Name { get; set; }
+        public string Flag { get; set; }
         public int Population { get; set; }
         public IList<string> TimeZones { get; set; }
         public IList<CurrencyDto> Currencies { get; set; }

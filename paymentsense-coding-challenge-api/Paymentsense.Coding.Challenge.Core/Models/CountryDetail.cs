@@ -5,6 +5,12 @@ namespace Paymentsense.Coding.Challenge.Core.Models
 {
     public class CountryDetail
     {
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("flag")]
+        public string Flag { get; set; }
+
         [JsonProperty("population")]
         public int Population { get; set; }
 

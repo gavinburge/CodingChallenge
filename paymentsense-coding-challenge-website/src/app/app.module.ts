@@ -8,20 +8,21 @@ import { PaymentsenseCodingChallengeApiService } from './services';
 import { HttpClientModule } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MaterialModule } from './material.module'
-import { MatProgressSpinnerModule, MatTableModule  } from '@angular/material';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 import { CountriesApiService } from './services/countries-api.service';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { CountriesComponent } from './components/countries/countries.component';
+import { CountryDetailComponent } from './components/country-detail/country-detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     HomeComponent,
-    CountriesComponent
+    CountriesComponent,
+    CountryDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -31,12 +32,11 @@ import { CountriesComponent } from './components/countries/countries.component';
     FontAwesomeModule,
     MaterialModule,
     BsDropdownModule.forRoot(),
-    MatProgressSpinnerModule,
-    MatTableModule 
   ],
   providers: [
     PaymentsenseCodingChallengeApiService,
     CountriesApiService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents:[CountryDetailComponent] 
 })
 export class AppModule { }

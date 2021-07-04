@@ -23,6 +23,8 @@ namespace Paymentsense.Coding.Challenge.Core.Mappers
         {
             return new GetCountryDetailResponse
             {
+                Name = countryDetail.Name,
+                Flag = countryDetail.Flag,
                 BorderingCountries = countryDetail.BorderingCountries,
                 CapitalCity = countryDetail.CapitalCity,
                 Currencies = countryDetail.Currencies.Select(c => c.ToCurrencyDto()).ToList(),
