@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, timeout, tap } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
@@ -16,11 +16,13 @@ import { IBaseApiResponseModel } from '../models/base-api-response.model';
 
 export class CountriesApiService {
 
-    constructor(private httpClient: HttpClient){}
+    constructor(
+        @Inject('BASE_API_URL') private baseUrl: string,
+        private httpClient: HttpClient){}
 
     getCountries(request: IGetCountriesQuery) : Observable<IBaseApiResponseModel<IGetCountriesResponse>> { 
         return this.httpClient
-                    .get<IBaseApiResponseModel<IGetCountriesResponse>>('https://localhost:44341/api/v1/countries')
+                    .get<IBaseApiResponseModel<IGetCountriesResponse>>(`${this.baseUrl}/api/v1/countries`)
                     .pipe(
                         tap(response => console.log('countries response', JSON.stringify(response))),
                         timeout(30000), 
@@ -29,7 +31,7 @@ export class CountriesApiService {
 
     paginatedGetCountries(request: IPaginatedGetCountriesQuery) : Observable<IBaseApiResponseModel<IPaginatedGetCountriesResponse>> { 
         return this.httpClient
-                    .get<IBaseApiResponseModel<IPaginatedGetCountriesResponse>>(`https://localhost:44341/api/v1/countries/paginated?pageSize=${request.pageSize}&pageNumber=${request.pageNumber}`)
+                    .get<IBaseApiResponseModel<IPaginatedGetCountriesResponse>>(`${this.baseUrl}/api/v1/countries/paginated?pageSize=${request.pageSize}&pageNumber=${request.pageNumber}`)
                     .pipe(
                         tap(response => console.log('countries response', JSON.stringify(response))),
                         timeout(30000), 
@@ -38,7 +40,7 @@ export class CountriesApiService {
 
     getCountryDetail(request: IGetCountryDetailQuery) : Observable<IBaseApiResponseModel<IGetCountryDetailResponse>> { 
         return this.httpClient
-                    .get<IBaseApiResponseModel<IGetCountryDetailResponse>>(`https://localhost:44341/api/v1/countries/detail?countryName=${request.countryName}`)
+                    .get<IBaseApiResponseModel<IGetCountryDetailResponse>>(`${this.baseUrl}/api/v1/countries/detail?countryName=${request.countryName}`)
                     .pipe(
                         tap(response => console.log('country detail', JSON.stringify(response))),
                         timeout(30000), 

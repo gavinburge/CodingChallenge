@@ -15,6 +15,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { CountriesComponent } from './components/countries/countries.component';
 import { CountryDetailComponent } from './components/country-detail/country-detail.component';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { CountryDetailComponent } from './components/country-detail/country-deta
   ],
   providers: [
     PaymentsenseCodingChallengeApiService,
-    CountriesApiService],
+    CountriesApiService,
+    { provide: "BASE_API_URL", useValue: environment.apiUrl }],
   bootstrap: [AppComponent],
   entryComponents:[CountryDetailComponent] 
 })

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
@@ -6,9 +6,11 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class PaymentsenseCodingChallengeApiService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(
+    @Inject('BASE_API_URL') private baseUrl: string,
+    private httpClient: HttpClient) {}
 
   public getHealth(): Observable<string> {
-    return this.httpClient.get('https://localhost:44341/health', { responseType: 'text' });
+    return this.httpClient.get(`${this.baseUrl}/health`, { responseType: 'text' });
   }
 }
