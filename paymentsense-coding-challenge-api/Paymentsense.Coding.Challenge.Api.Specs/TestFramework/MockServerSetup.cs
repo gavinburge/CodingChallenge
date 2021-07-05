@@ -34,6 +34,17 @@ namespace Paymentsense.Coding.Challenge.Api.Specs.TestFramework
                             .WithStatusCode(200)
                             .WithHeader("Content-Type", "application/json")
                             .WithBodyFromFile("./TestFramework/Countries.json"));
+
+            MockServer
+                .Given(
+                    Request.Create()
+                            .WithPath("/rest/v2/name/France")
+                            .UsingGet())
+                .RespondWith(
+                    Response.Create()
+                            .WithStatusCode(200)
+                            .WithHeader("Content-Type", "application/json")
+                            .WithBodyFromFile("./TestFramework/CountryDetail.json"));
         }
     }
 }

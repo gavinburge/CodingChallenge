@@ -29,7 +29,7 @@ namespace Paymentsense.Coding.Challenge.Core.Services
 
         public async Task<CountryDetail> GetCountryDetailAsync(string country)
         {
-            var response = await _httpClient.GetAsync($"rest/v2/name/{country}").ConfigureAwait(false);
+            var response = await _httpClient.GetAsync($"/rest/v2/name/{country}").ConfigureAwait(false);
 
             response.EnsureSuccessStatusCode();
 

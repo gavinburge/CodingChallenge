@@ -52,3 +52,8 @@ Scenario: When a 5xx error is returned from external service then it should be r
 	When a request to get all countries
 	Then i should get back a 500 status
 	And 3 attempts to call the service should have been made
+
+Scenario: Get country detail should return a 200 status
+	Given a request to get country detail for France
+	Then i should get back a 200 status
+	And i should get back detail on France

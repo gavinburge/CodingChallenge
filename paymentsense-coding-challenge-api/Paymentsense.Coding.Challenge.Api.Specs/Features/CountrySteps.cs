@@ -87,6 +87,12 @@ namespace Paymentsense.Coding.Challenge.Api.Specs.Features
                                                     .WithBody("Internal server error"));
         }
 
+        [Given(@"a request to get country detail for France")]
+        public async Task GivenARequestToGetCountryDetailForFrance()
+        {
+            _httpResponseMessage = await _client.GetAsync($"/api/v1/countries/detail?countryName=France");
+        }
+
         [Then(@"(.*) attempts to call the service should have been made")]
         public void ThenAttemptsToCallTheServiceShouldHaveBeenMade(int p0)
         {
@@ -175,5 +181,15 @@ namespace Paymentsense.Coding.Challenge.Api.Specs.Features
             _getCountriesResponse.Data.TotalItems.Should().Be(totalItems);
         }
 
+        [Then(@"i should get back detail on France")]
+        public async Task ThenIShouldGetBackDetailOnFrance()
+        {
+            var responseString = await _httpResponseMessage.Content.ReadAsStringAsync();
+            var getCountryDetail = JsonConvert.DeserializeObject<BaseApiResponseDto<GetCountryDetailResponse>>(responseString);
+
+            getCountryDetail.Should().NotBeNull();
+            getCountryDetail.Data.Should().NotBeNull();
+            getCountryDetail.Data.Name.Should().Be("France");
+        }
     }
 }

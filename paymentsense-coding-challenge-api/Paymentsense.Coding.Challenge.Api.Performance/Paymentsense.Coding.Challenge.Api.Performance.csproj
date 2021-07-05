@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -17,11 +17,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentAssertions" Version="6.0.0-beta0001" />
-    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="3.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0-release-20210626-04" />
-    <PackageReference Include="SpecFlow.xUnit" Version="3.9.8" />
-    <PackageReference Include="WireMock.Net" Version="1.4.16" />
+    <PackageReference Include="NBench" Version="2.0.1" />
+    <PackageReference Include="Nito.AsyncEx.Context" Version="5.1.0" />
+    <PackageReference Include="Pro.NBench.xUnit" Version="2.0.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
       <PrivateAssets>all</PrivateAssets>
@@ -30,17 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Paymentsense.Coding.Challenge.Api\Paymentsense.Coding.Challenge.Api.csproj" />
-    <ProjectReference Include="..\Paymentsense.Coding.Challenge.Contracts\Paymentsense.Coding.Challenge.Contracts.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="TestFramework\Countries.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="TestFramework\CountryDetail.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <ProjectReference Include="..\Paymentsense.Coding.Challenge.Api.Specs\Paymentsense.Coding.Challenge.Api.Specs.csproj" />
   </ItemGroup>
 
 </Project>

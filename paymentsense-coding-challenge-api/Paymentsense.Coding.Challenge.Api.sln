@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{105AFBA5
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paymentsense.Coding.Challenge.Api.Specs", "Paymentsense.Coding.Challenge.Api.Specs\Paymentsense.Coding.Challenge.Api.Specs.csproj", "{4EEFFC9F-9BCF-4D1F-88E0-991615569D06}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paymentsense.Coding.Challenge.Api.Performance", "Paymentsense.Coding.Challenge.Api.Performance\Paymentsense.Coding.Challenge.Api.Performance.csproj", "{12EA0AB8-26D7-4FB7-9E00-E7736BE88901}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +87,18 @@ Global
 		{4EEFFC9F-9BCF-4D1F-88E0-991615569D06}.Release|x64.Build.0 = Release|Any CPU
 		{4EEFFC9F-9BCF-4D1F-88E0-991615569D06}.Release|x86.ActiveCfg = Release|Any CPU
 		{4EEFFC9F-9BCF-4D1F-88E0-991615569D06}.Release|x86.Build.0 = Release|Any CPU
+		{12EA0AB8-26D7-4FB7-9E00-E7736BE88901}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12EA0AB8-26D7-4FB7-9E00-E7736BE88901}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12EA0AB8-26D7-4FB7-9E00-E7736BE88901}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{12EA0AB8-26D7-4FB7-9E00-E7736BE88901}.Debug|x64.Build.0 = Debug|Any CPU
+		{12EA0AB8-26D7-4FB7-9E00-E7736BE88901}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{12EA0AB8-26D7-4FB7-9E00-E7736BE88901}.Debug|x86.Build.0 = Debug|Any CPU
+		{12EA0AB8-26D7-4FB7-9E00-E7736BE88901}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12EA0AB8-26D7-4FB7-9E00-E7736BE88901}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12EA0AB8-26D7-4FB7-9E00-E7736BE88901}.Release|x64.ActiveCfg = Release|Any CPU
+		{12EA0AB8-26D7-4FB7-9E00-E7736BE88901}.Release|x64.Build.0 = Release|Any CPU
+		{12EA0AB8-26D7-4FB7-9E00-E7736BE88901}.Release|x86.ActiveCfg = Release|Any CPU
+		{12EA0AB8-26D7-4FB7-9E00-E7736BE88901}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -92,6 +106,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{29B33764-7D72-4940-90F9-28467B569288} = {105AFBA5-DD09-485D-AD36-53B6F14265F9}
 		{4EEFFC9F-9BCF-4D1F-88E0-991615569D06} = {105AFBA5-DD09-485D-AD36-53B6F14265F9}
+		{12EA0AB8-26D7-4FB7-9E00-E7736BE88901} = {105AFBA5-DD09-485D-AD36-53B6F14265F9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B43FA89C-9979-4D77-B29A-FAAFA80619F7}
