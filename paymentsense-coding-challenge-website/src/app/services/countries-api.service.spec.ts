@@ -17,7 +17,7 @@ describe('countries-api.service', () => {
   beforeEach(async(() => { // 3
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [CountriesApiService],
+      providers: [CountriesApiService, { provide: "BASE_API_URL", useValue: "https://localhost:44341" }],
     }).compileComponents();
 
     countriesApiService = TestBed.get(CountriesApiService);
