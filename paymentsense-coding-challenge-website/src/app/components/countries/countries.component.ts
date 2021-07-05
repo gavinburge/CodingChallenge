@@ -66,7 +66,7 @@ export class CountriesComponent implements AfterViewInit, OnInit, OnDestroy {
 
         //Open MatDialog and load component dynamically  
         const dialogRef = this.dialog.open(CountryDetailComponent, {
-          data: response
+          data: response.data
         });
 
         //Need to subscribe afterClosed event of MatDialog  

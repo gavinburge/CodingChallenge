@@ -8,6 +8,7 @@ import { IPaginatedGetCountriesQuery } from '../models/queries/paginated-get-cou
 import { IPaginatedGetCountriesResponse } from '../models/queries/paginated-get-countries-response';
 import { IGetCountryDetailQuery } from '../models/queries/get-country-detail-query';
 import { IGetCountryDetailResponse } from '../models/queries/get-country-detail-response';
+import { IBaseApiResponseModel } from '../models/base-api-response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -17,27 +18,27 @@ export class CountriesApiService {
 
     constructor(private httpClient: HttpClient){}
 
-    getCountries(request: IGetCountriesQuery) : Observable<IGetCountriesResponse> { 
+    getCountries(request: IGetCountriesQuery) : Observable<IBaseApiResponseModel<IGetCountriesResponse>> { 
         return this.httpClient
-                    .get<IGetCountriesResponse>('https://localhost:44341/api/v1/countries')
+                    .get<IBaseApiResponseModel<IGetCountriesResponse>>('https://localhost:44341/api/v1/countries')
                     .pipe(
                         tap(response => console.log('countries response', JSON.stringify(response))),
                         timeout(30000), 
                         catchError(this.processError));
     }
 
-    paginatedGetCountries(request: IPaginatedGetCountriesQuery) : Observable<IPaginatedGetCountriesResponse> { 
+    paginatedGetCountries(request: IPaginatedGetCountriesQuery) : Observable<IBaseApiResponseModel<IPaginatedGetCountriesResponse>> { 
         return this.httpClient
-                    .get<IPaginatedGetCountriesResponse>(`https://localhost:44341/api/v1/countries/paginated?pageSize=${request.pageSize}&pageNumber=${request.pageNumber}`)
+                    .get<IBaseApiResponseModel<IPaginatedGetCountriesResponse>>(`https://localhost:44341/api/v1/countries/paginated?pageSize=${request.pageSize}&pageNumber=${request.pageNumber}`)
                     .pipe(
                         tap(response => console.log('countries response', JSON.stringify(response))),
                         timeout(30000), 
                         catchError(this.processError));
     }
 
-    getCountryDetail(request: IGetCountryDetailQuery) : Observable<IGetCountryDetailResponse> { 
+    getCountryDetail(request: IGetCountryDetailQuery) : Observable<IBaseApiResponseModel<IGetCountryDetailResponse>> { 
         return this.httpClient
-                    .get<IGetCountryDetailResponse>(`https://localhost:44341/api/v1/countries/detail?countryName=${request.countryName}`)
+                    .get<IBaseApiResponseModel<IGetCountryDetailResponse>>(`https://localhost:44341/api/v1/countries/detail?countryName=${request.countryName}`)
                     .pipe(
                         tap(response => console.log('country detail', JSON.stringify(response))),
                         timeout(30000), 

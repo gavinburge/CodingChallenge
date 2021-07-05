@@ -1,6 +1,7 @@
 import {CollectionViewer, DataSource} from "@angular/cdk/collections";
 import { BehaviorSubject, Observable, of } from "rxjs";
 import { catchError, finalize, map } from "rxjs/operators";
+import { IBaseApiResponseModel } from "src/app/models/base-api-response.model";
 import { ICountryModel } from "src/app/models/country.model";
 import { IGetCountriesQuery } from "src/app/models/queries/get-countries-query";
 import { IPaginatedGetCountriesQuery } from "src/app/models/queries/paginated-get-countries-query";
@@ -40,9 +41,9 @@ export class CountriesDataSource implements DataSource<ICountryModel> {
                 .pipe(
                         catchError(() => of([])),
                         finalize(() => this.loadingSubject.next(false)))
-                .subscribe((response:IPaginatedGetCountriesResponse) => {
-                    this.totalItems = response.totalItems;
-                    this.countriesSubject.next(response.countries)
+                .subscribe((response:IBaseApiResponseModel<IPaginatedGetCountriesResponse>) => {
+                    this.totalItems = response.data.totalItems;
+                    this.countriesSubject.next(response.data.countries)
                 });
     }  
 }
